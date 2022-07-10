@@ -1,0 +1,38 @@
+<div class="container-fluid h-100 p-2">
+  <div class="card h-100 shadow p-2">
+  <h1 class="text-center fw-bold mt-3">FOLDER STRUCTURE</h1>
+  <div class="col-md-12 text-center">
+    <button type="button" (click)="addFolderOrFiles()" class="btn btn-primary text-center mb-1"><i class="fa fa-plus fw-bold"></i> Add folder <i class="fa fa-folder fw-bold"></i> to root</button>
+  </div>
+  <!-- TreeNodeComponent -->
+  <app-tree-node [treeData]="treeData"></app-tree-node>
+
+  <div *ngIf="isShowForm">
+
+    <!-- Form Start -->
+    <form [formGroup]="treeDataForm">
+      <div class="row g-3 align-items-center">
+        <div class="col-auto">
+          <select class="form-select" formControlName="fileType" *ngIf="rootTreeNode" style="font-family: 'FontAwesome', Arial, Helvetica, sans-serif;">
+            <option value="folder" class="p-3">&#xf07b; folder</option>
+            <option value="file"  class="p-3">&#xf15b; file</option>
+          </select>
+        </div>
+        <div class="col-auto">
+          <input type="text" class="form-control" formControlName="fileName">
+        </div>
+        <div class="col-auto">
+          <i class="text-primary fa fa-plus fa-2x" aria-hidden="true" (click)="addRootNode()"></i>
+        </div>
+        <div class="col-auto">
+          <i class="text-danger fa fa-trash fa-2x" aria-hidden="true" (click)="hideTreeForm()"></i>
+        </div>
+      </div>
+    </form>
+   
+    <!-- Form End -->
+  </div>
+</div>
+</div>
+
+

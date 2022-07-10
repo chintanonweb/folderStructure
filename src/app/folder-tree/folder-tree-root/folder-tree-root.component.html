@@ -1,0 +1,18 @@
+<div class="col-md-12 text-center">
+    <button type="button" class="btn btn-primary text-center mb-1" (click)="showForm =true;"><i class="fa fa-plus fw-bold"></i> Add folder <i class="fa fa-folder fw-bold"></i> to root</button>
+</div>
+<app-folder-tree-node [folderData]="folderData"></app-folder-tree-node>
+<form [formGroup]="rootFolderDataForm" *ngIf="showForm" class="my-2">
+    <div class="row g-3 align-items-center">
+        <div class="col-auto">
+            <input type="text" class="form-control" formControlName="fileName">
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-primary form-btn" type="submit" (click)="addRootNodeIntoTree()">
+                <i class="fa fa-check fw-bold" aria-hidden="true"></i>
+            </button>
+            <button class="btn btn-danger form-btn ms-1" (click)="showForm = false"><i
+                    class="fa fa-close fw-bold" aria-hidden="true"></i></button>
+        </div>
+    </div>
+</form>

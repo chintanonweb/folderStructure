@@ -1,0 +1,45 @@
+<ul class="list-unstyled">
+  <li *ngFor="let item of treeData ; let index = index">
+    <div class="row align-items-center mb-1">
+      <div class="col-auto">
+        <i class="fa fa-folder fa-2x text-warning" *ngIf='item?.type === "folder"'></i> <i
+          class="fa fa-file text-primary" *ngIf='item?.type === "file"'></i>
+      </div>
+      <div class="col-auto ps-0">
+        <h3 class="mb-0">
+          <strong id="item?.name" *ngIf="!item.editMode"> {{ item?.name | uppercase }}</strong>
+        </h3>
+        <span *ngIf="item.editMode">
+          <div class="row">
+            <div class="col-auto">
+              <input type="text" [(ngModel)]="item.name" class="form-control">
+            </div>
+            <div class="col-auto ps-0 pe-1">
+              <button (click)="editChilds(item); item.editMode=false" class="btn btn-primary">Save</button>
+            </div>
+          </div>
+        </span>
+      </div>
+
+      <div class="col-auto px-1">
+        <i class="fa fa-plus btn btn-primary fw-bold crud-btn" aria-hidden="true" *ngIf="item?.type==='folder'"
+          (click)="addchildrenNode(item)"></i>
+      </div>
+      <div class="col-auto px-1">
+        <!-- <i class="fa fa-pencil text-dark" aria-hidden="true"  (click)='editChild(treeData,item.id,"test")'></i> -->
+        <button class="btn btn-warning crud-btn" (click)="item.editMode=true">
+          <i class="fa fa-pencil" aria-hidden="true" ></i>
+        </button>
+      </div>
+      <div class="col-auto px-1">
+        <button class="btn btn-danger crud-btn" (click)='deleteTreeNodes(index)'>
+        <i class="fa fa-trash" aria-hidden="true" ></i>
+        </button>
+      </div>
+    </div>
+    <ul *ngIf="item?.children">
+      <!-- recursive component -->
+      <app-tree-node [treeData]="item?.children"></app-tree-node>
+    </ul>
+  </li>
+</ul>

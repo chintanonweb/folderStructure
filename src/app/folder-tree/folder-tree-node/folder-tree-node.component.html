@@ -1,0 +1,54 @@
+<ul *ngIf="folderData.length">
+    <li *ngFor="let item of folderData; let index = index" class="list-unstyled">
+        <div class="col-auto">
+            <mat-chip [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger" (mouseover)="openMenu(menuTrigger)" >
+                <div class="mb-1">
+                    <i class="fa fa-folder fa-2x text-warning" *ngIf='item?.type === "folder"'></i>
+                    <i class="fa fa-file text-primary" *ngIf='item?.type === "file"'></i>
+                    {{item.name}}
+                    <!-- <button class="btn btn-primary crud-btn" (click)="addFolderOrFiles(item)"
+                        *ngIf='item?.type === "folder"'>
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn btn-danger crud-btn ms-1" (click)="deleteNodefromTree(folderData, index)">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button> -->
+                </div>
+            </mat-chip>
+        </div>
+        <mat-menu #menu="matMenu" [overlapTrigger]="false" >
+            <span (mouseleave)="closeMenu(menuTrigger)" >
+                <button mat-menu-item (click)="addFolderOrFiles(item)">
+                    <mat-icon>add</mat-icon>
+                    <span>Add New File/Folder</span>
+                </button>
+                <button mat-menu-item (click)="deleteNodefromTree(folderData, index)">
+                    <mat-icon>delete</mat-icon>
+                    <span>Delete</span>
+                </button>
+            </span>
+        </mat-menu>
+        <form [formGroup]="treeDataForm" *ngIf="item?.showForm" class="my-2">
+            <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                    <select class="form-select" formControlName="fileType"
+                        style="font-family: 'FontAwesome', Arial, Helvetica, sans-serif;">
+                        <option value="folder" class="p-3">&#xf07b; folder</option>
+                        <option value="file" class="p-3">&#xf15b; file</option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <input type="text" class="form-control" formControlName="fileName">
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-primary form-btn" type="submit" (click)="adddNodeIntoTree(item)">
+                        <i class="fa fa-check fw-bold" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn btn-danger form-btn ms-1" (click)="item.showForm = false"><i
+                            class="fa fa-close fw-bold" aria-hidden="true"></i></button>
+                </div>
+            </div>
+        </form>
+        <app-folder-tree-node *ngIf="item?.children?.length" [folderData]="item?.children!"></app-folder-tree-node>
+    </li>
+</ul>
